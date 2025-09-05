@@ -1,0 +1,20 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Redirecting…</title>
+    <meta http-equiv="refresh" content="0; url=/actitrack/">
+    <script>
+      // SPA fallback ala gh-pages
+      (function() {
+        var path = location.pathname;
+        // pindahkan path ke hash agar React bisa handle
+        var newUrl = '/actitrack/#' + path.replace(/^\/actitrack\/?/, '');
+        if (location.search) newUrl += location.search;
+        if (location.hash) newUrl += location.hash;
+        location.replace(newUrl);
+      })();
+    </script>
+  </head>
+  <body>Redirecting…</body>
+</html>
