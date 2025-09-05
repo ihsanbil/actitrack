@@ -1,0 +1,45 @@
+name: Pull external feeds to Sanity
+
+on:
+  schedule:
+    # 3x sehari (WIB = UTC+7) → 02:05, 10:05, 18:05 UTC
+    - cron: "5 2,10,18 * * *"
+  workflow_dispatch: {}
+  push:
+    paths:
+      - "scripts/pull-feeds.mjs"
+      - ".github/workflows/pull-feeds.yml"
+      - "package.json"
+      - "package-lock.json"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: "pull-feeds"
+  cancel-in-progress: true
+
+jobs:
+  pull:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm"
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Pull & sync feeds to Sanity
+        env:
+          SANITY_PROJECT_ID: ${{ secrets.SANITY_PROJECT_ID }}
+          SANITY_DATASET: ${{ secrets.SANITY_DATASET }}
+          SANITY_API_VERSION: ${{ secrets.SANITY_API_VERSION }}
+          SANITY_TOKEN: ${{ secrets.SANITY_TOKEN }}
+        run: node scripts/pull-feeds.mjs
