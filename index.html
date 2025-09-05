@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Kosongkan title agar tab hanya menampilkan favicon/logo (sesuai permintaan) -->
+    <title></title>
+
+    <!-- SEO dasar -->
+    <meta
+      name="description"
+      content="ActiTrack membantu tim lapangan presensi GPS, koordinasi tugas, dan analitik kinerja—UI bersih, cepat, dan akurat."
+    />
+    <link rel="canonical" href="https://barateknologi.com/bmt/" />
+    <meta name="robots" content="index,follow,max-image-preview:large" />
+    <meta name="format-detection" content="telephone=no" />
+
+    <!-- Theming / PWA -->
+    <meta name="theme-color" content="#111827" />
+    <meta name="color-scheme" content="light" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- Icons (samakan dengan yang didefinisikan di /site.webmanifest) -->
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" href="/icons/icon-192.png" sizes="192x192" />
+    <link rel="icon" type="image/png" href="/icons/icon-512.png" sizes="512x512" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5AA6FF" />
+
+    <!-- Social (OG / Twitter) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="ActiTrack" />
+    <meta property="og:title" content="ActiTrack — Presensi GPS, Tugas, & Analitik Tim Lapangan" />
+    <meta
+      property="og:description"
+      content="Presensi akurat, koordinasi tugas, dan analitik real-time dalam satu aplikasi Android."
+    />
+    <meta property="og:url" content="https://barateknologi.com/bmt/" />
+    <meta property="og:image" content="/hero.jpg" />
+    <meta property="og:locale" content="id_ID" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="ActiTrack — Presensi GPS, Tugas, & Analitik Tim Lapangan" />
+    <meta
+      name="twitter:description"
+      content="Presensi akurat, koordinasi tugas, dan analitik real-time dalam satu aplikasi Android."
+    />
+    <meta name="twitter:image" content="/hero.jpg" />
+
+    <!-- Resource hints -->
+    <link rel="dns-prefetch" href="https://play.google.com" />
+    <!-- HAPUS preload hero global untuk menghindari warning saat bukan di halaman Home -->
+    <!-- <link rel="preload" as="image" href="/hero.jpg" /> -->
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "MobileApplication",
+      "name": "ActiTrack",
+      "description": "Aplikasi Android untuk presensi GPS, manajemen tugas, dan analitik kinerja tim lapangan.",
+      "operatingSystem": "Android",
+      "applicationCategory": "BusinessApplication",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "IDR" },
+      "url": "https://barateknologi.com/bmt/",
+      "installUrl": "https://play.google.com/store/apps/details?id=com.baranimultiteknologi.pembayaran",
+      "publisher": { "@type": "Organization", "name": "Barani Multi Teknologi" },
+      "inLanguage": "id"
+    }
+    </script>
+  </head>
+
+  <body>
+    <noscript>Untuk pengalaman penuh, aktifkan JavaScript.</noscript>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

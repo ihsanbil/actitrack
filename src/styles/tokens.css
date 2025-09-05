@@ -1,0 +1,176 @@
+/* src/styles/tokens.css */
+
+/* -------------------------------------------------------
+   0) SRGB FALLBACK (untuk browser tanpa OKLCH / color-mix)
+   ------------------------------------------------------- */
+:root {
+  /* Brand sRGB (mendekati Aurora Blue) */
+  --brand-500: #5aa6ff;
+  --brand-600: #7c83ff;
+
+  /* Accent (teal) */
+  --accent-500: #4cc9f0;
+  --accent-600: #2bb3df;
+
+  /* Gradients & util (fallback) */
+  --brand-grad: linear-gradient(135deg, var(--brand-500), var(--brand-600));
+  --accent-grad: linear-gradient(135deg, var(--accent-500), var(--accent-600));
+  --brand-10: rgba(122, 168, 255, 0.10);
+  --brand-15: rgba(122, 168, 255, 0.15);
+  --brand-20: rgba(122, 168, 255, 0.20);
+  --glow:
+    radial-gradient(900px 520px at 10% -10%, rgba(255,255,255,.18), transparent),
+    radial-gradient(900px 520px at 90% -20%, rgba(255,255,255,.18), transparent);
+  --progress-grad: linear-gradient(90deg, var(--brand-500), var(--brand-600));
+
+  /* Back-compat alias */
+  --bmt500: var(--brand-500);
+  --bmt600: var(--brand-600);
+}
+
+/* -------------------------------------------------------
+   1) OKLCH UPGRADE (override kalau didukung)
+   ------------------------------------------------------- */
+@supports (color: oklch(1 0 0)) {
+  /* ===== Default theme: Aurora Blue ===== */
+  :root {
+    --brand-500: oklch(0.72 0.12 255);
+    --brand-600: oklch(0.68 0.13 255);
+
+    --accent-500: oklch(0.75 0.10 210);
+    --accent-600: oklch(0.70 0.12 210);
+
+    --brand-grad: linear-gradient(135deg, var(--brand-500), var(--brand-600));
+    --accent-grad: linear-gradient(135deg, var(--accent-500), var(--accent-600));
+
+    /* pakai color-mix yang smooth */
+    --brand-10: color-mix(in oklch, var(--brand-500) 10%, transparent);
+    --brand-15: color-mix(in oklch, var(--brand-500) 15%, transparent);
+    --brand-20: color-mix(in oklch, var(--brand-500) 20%, transparent);
+
+    --glow:
+      radial-gradient(900px 520px at 10% -10%, color-mix(in oklch, var(--brand-500) 18%, white), transparent),
+      radial-gradient(900px 520px at 90% -20%, color-mix(in oklch, var(--brand-600) 18%, white), transparent);
+
+    --progress-grad: linear-gradient(90deg, var(--brand-500), var(--brand-600));
+
+    --bmt500: var(--brand-500);
+    --bmt600: var(--brand-600);
+  }
+
+  /* ===== Preset 2: Emerald Teal ===== */
+  :root[data-theme="emerald"] {
+    --brand-500: oklch(0.74 0.11 180);
+    --brand-600: oklch(0.68 0.12 180);
+    --accent-500: oklch(0.76 0.09 210);
+    --accent-600: oklch(0.70 0.11 210);
+    --brand-grad: linear-gradient(135deg, var(--brand-500), var(--brand-600));
+    --accent-grad: linear-gradient(135deg, var(--accent-500), var(--accent-600));
+    --brand-10: color-mix(in oklch, var(--brand-500) 10%, transparent);
+    --brand-15: color-mix(in oklch, var(--brand-500) 15%, transparent);
+    --brand-20: color-mix(in oklch, var(--brand-500) 20%, transparent);
+    --glow:
+      radial-gradient(900px 520px at 10% -10%, color-mix(in oklch, var(--brand-500) 18%, white), transparent),
+      radial-gradient(900px 520px at 90% -20%, color-mix(in oklch, var(--brand-600) 18%, white), transparent);
+    --progress-grad: linear-gradient(90deg, var(--brand-500), var(--brand-600));
+    --bmt500: var(--brand-500);
+    --bmt600: var(--brand-600);
+  }
+
+  /* ===== Preset 3: Violet Pulse ===== */
+  :root[data-theme="violet"] {
+    --brand-500: oklch(0.70 0.16 300);
+    --brand-600: oklch(0.66 0.17 300);
+    --accent-500: oklch(0.74 0.12 260);
+    --accent-600: oklch(0.70 0.13 260);
+    --brand-grad: linear-gradient(135deg, var(--brand-500), var(--brand-600));
+    --accent-grad: linear-gradient(135deg, var(--accent-500), var(--accent-600));
+    --brand-10: color-mix(in oklch, var(--brand-500) 10%, transparent);
+    --brand-15: color-mix(in oklch, var(--brand-500) 15%, transparent);
+    --brand-20: color-mix(in oklch, var(--brand-500) 20%, transparent);
+    --glow:
+      radial-gradient(900px 520px at 10% -10%, color-mix(in oklch, var(--brand-500) 18%, white), transparent),
+      radial-gradient(900px 520px at 90% -20%, color-mix(in oklch, var(--brand-600) 18%, white), transparent);
+    --progress-grad: linear-gradient(90deg, var(--brand-500), var(--brand-600));
+    --bmt500: var(--brand-500);
+    --bmt600: var(--brand-600);
+  }
+}
+
+/* -------------------------------------------------------
+   2) TOKENS → UTILITIES (dipakai di komponen)
+   ------------------------------------------------------- */
+
+/* Buttons */
+.btn-primary {
+  background: var(--brand-grad);
+  color: #fff;
+  border-radius: 9999px;
+  padding: 0.625rem 1.125rem; /* ~px-4.5 py-2.5 */
+  font-weight: 600;
+  box-shadow: 0 14px 30px color-mix(in oklab, var(--brand-600) 22%, transparent);
+  transition: transform .2s ease, box-shadow .2s ease, opacity .2s ease, background .2s ease;
+}
+.btn-primary:hover { transform: translateY(-2px); }
+.btn-primary:active { transform: translateY(0); box-shadow: 0 8px 18px rgba(2,6,23,.12); }
+.btn-primary:focus-visible { outline: none; box-shadow: 0 0 0 2px color-mix(in oklab, var(--brand-500) 60%, white); }
+
+.badge-brand {
+  background: var(--brand-10);
+  color: oklch(0.40 0.03 255);
+  border-radius: 9999px;
+  padding: 0.25rem 0.5rem;
+  font-size: 12px;
+  border: 1px solid var(--brand-15);
+}
+
+.soft-brand {
+  background: var(--brand-10);
+  border: 1px solid var(--brand-15);
+  border-radius: 1rem;
+}
+
+.ring-brand { box-shadow: 0 0 0 1px var(--brand-15) inset; }
+.text-brand { color: var(--brand-600); }
+.bg-brand  { background: var(--brand-grad); }
+.progress-brand { background: var(--progress-grad); }
+
+/* -------------------------------------------------------
+   3) VISUAL HELPERS yang dipakai di layout
+   ------------------------------------------------------- */
+
+.bg-grid-soft {
+  --grid-c: rgba(2,6,23,.06);
+  background-image:
+    linear-gradient(var(--grid-c) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-c) 1px, transparent 1px);
+  background-size: 24px 24px, 24px 24px;
+  background-position: -1px -1px, -1px -1px;
+}
+
+.hero-scrim {
+  background:
+    linear-gradient(180deg, rgba(2,6,23,.72), rgba(2,6,23,.42) 28%, rgba(2,6,23,.22) 58%, rgba(2,6,23,.18) 100%);
+  mix-blend-mode: multiply;
+}
+
+.kenburns {
+  animation: kenburns 18s ease-in-out infinite alternate;
+  transform-origin: 55% 40%;
+}
+@keyframes kenburns {
+  from { transform: scale(1.0); }
+  to   { transform: scale(1.08); }
+}
+
+/* sembunyikan scrollbar horizontal tanpa mematikan scroll */
+.no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
+/* fade edge untuk carousel (butuh parent overflow-x-auto) */
+.mask-edge {
+  -webkit-mask-image:
+    linear-gradient(90deg, transparent, #000 32px, #000 calc(100% - 32px), transparent);
+  mask-image:
+    linear-gradient(90deg, transparent, #000 32px, #000 calc(100% - 32px), transparent);
+}

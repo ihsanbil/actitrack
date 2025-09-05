@@ -1,0 +1,152 @@
+@import "tailwindcss";
+@import "./styles/tokens.css";
+
+/* Grid sangat tipis (hampir tak terlihat) agar tidak “kosong” tapi tetap clean */
+.bg-grid-soft {
+  background-image:
+    linear-gradient(to right, rgba(2,6,23,.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(2,6,23,.04) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+/* Reveal halus */
+.reveal   { opacity:.001; transform: translateY(6px); transition: opacity .45s ease, transform .45s ease; }
+.revealed { opacity:1;    transform: none; }
+
+/* Buttons */
+.btn-primary {
+  @apply inline-flex items-center justify-center rounded-full px-5 py-3 text-sm font-medium text-white transition;
+  background: linear-gradient(135deg, var(--bmt500), var(--bmt600));
+  box-shadow: 0 12px 28px rgba(2,6,23,.12);
+}
+.btn-ghost {
+  @apply inline-flex items-center justify-center rounded-full px-5 py-3 text-sm font-medium border bg-white text-slate-700 transition;
+  border-color: rgba(2,6,23,.12);
+}
+.btn-primary:hover { transform: translateY(-1px); }
+.btn-primary:active { transform: translateY(0); }
+
+/* Kartu clean */
+.card {
+  @apply rounded-2xl border bg-white transition;
+  border-color: rgba(2,6,23,.12);
+}
+.card:hover { box-shadow: 0 10px 30px rgba(2,6,23,.08); transform: translateY(-1px); }
+
+/* Hero helpers */
+.hero-scrim{
+  background:
+    linear-gradient(to bottom, rgba(2,6,23,.55), rgba(2,6,23,.30) 30%, rgba(2,6,23,.55) 75%, rgba(2,6,23,.75));
+}
+@keyframes kenburns { 0% { transform: scale(1)} 100% { transform: scale(1.06)} }
+.kenburns { animation: kenburns 16s ease-in-out both; }
+/* ===== Magnetic button base (buat <MagneticButton/>) ===== */
+.magnetic{
+  position: relative;
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: .5rem;
+  padding: .75rem 1.25rem;
+  border-radius: 9999px;
+  color: #fff; font-weight: 600;
+  background: linear-gradient(135deg, var(--bmt500), var(--bmt600));
+  box-shadow: 0 12px 28px rgba(2,6,23,.14);
+  transform: translate(var(--mx,0), var(--my,0));
+  transition: transform .12s ease;
+}
+.magnetic::after{
+  content: "";
+  position: absolute; inset: 0; border-radius: inherit;
+  background: radial-gradient(120px 120px at var(--gx,50%) var(--gy,50%), rgba(255,255,255,.24), transparent 60%);
+  opacity: .65; pointer-events: none;
+}
+.magnetic:focus-visible{
+  outline: none;
+  box-shadow: 0 0 0 3px color-mix(in oklch, var(--bmt500) 25%, white);
+}
+
+/* ===== Focus styles umum (link/tombol penting) ===== */
+a:focus-visible, button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px color-mix(in oklch, var(--bmt500) 25%, white);
+  border-radius: 12px;
+}
+
+/* ===== Ken Burns: hormati prefers-reduced-motion ===== */
+@media (prefers-reduced-motion: reduce) {
+  .kenburns { animation: none !important; transform: none !important; }
+  .reveal   { opacity: 1 !important; transform: none !important; transition: none !important; }
+}
+
+/* ===== State tombol (disabled) ===== */
+.btn-primary:disabled,
+.btn-ghost:disabled{
+  opacity: .6; cursor: not-allowed; transform: none;
+  box-shadow: none;
+}
+
+/* ===== Varian "chip" kecil (berguna buat metric/label) ===== */
+.chip {
+  @apply inline-flex items-center gap-2 rounded-full border bg-white px-3 py-1 text-xs;
+  border-color: rgba(2,6,23,.12);
+}
+/* Anchor offset: saat klik #hash, judul section tak tertutup sticky header */
+[id] { scroll-margin-top: 76px; }
+@media (min-width: 768px){ [id]{ scroll-margin-top: 92px; } }
+/* Paksa warna link navbar selalu terlihat (fallback) */
+header a { color: inherit; }
+/* sembunyikan scrollbar di carousel */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* fade tepi track biar rapi tanpa garis scroll */
+.mask-edge {
+  -webkit-mask: linear-gradient(90deg, transparent, #000 24px, #000 calc(100% - 24px), transparent);
+          mask: linear-gradient(90deg, transparent, #000 24px, #000 calc(100% - 24px), transparent);
+}
+/* sembunyikan scrollbar (mobile & webkit) */
+.no-scrollbar {
+  scrollbar-width: none;           /* Firefox */
+  -ms-overflow-style: none;        /* IE/Edge legacy */
+}
+.no-scrollbar::-webkit-scrollbar { display: none; } /* Chrome/Safari */
+
+/* fade kanan-kiri (dipakai mulai sm lewat sm:mask-edge) */
+@supports (mask-image: linear-gradient(#000, #000)) or (-webkit-mask-image: linear-gradient(#000,#000)) {
+  .mask-edge {
+    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 24px, #000 calc(100% - 24px), transparent 100%);
+            mask-image: linear-gradient(to right, transparent 0, #000 24px, #000 calc(100% - 24px), transparent 100%);
+  }
+}
+/* === Fix: hero full-bleed tanpa horizontal scroll di device nyata === */
+/* Bungkus hero agar apa pun (blur/aurora/overscan img) tidak melebar layout */
+.hero--wrap {
+  overflow-x: hidden;
+  overflow-y: visible;
+}
+@supports (overflow: clip) {
+  .hero--wrap { overflow: clip; }
+}
+
+/* Gambar hero selalu overscan + aman di mobile (no gap kanan) */
+.hero-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform-origin: center;
+  will-change: transform;
+  /* overscan permanen agar tak pernah ada garis putih di tepi */
+  transform: scale(1.06);
+}
+
+/* Animasi kenburns hanya untuk ≥sm; tetap >1 supaya tak buka gap */
+@media (min-width: 640px) {
+  .hero-img { animation: heroKen 22s ease-in-out infinite alternate; }
+}
+@keyframes heroKen {
+  from { transform: scale(1.12); }
+  to   { transform: scale(1.06); }
+}
+
+/* Guard global: cegah scroll horizontal dari komponen yang ‘nakal’ */
+html, body, #root { max-width: 100%; overflow-x: hidden; }
